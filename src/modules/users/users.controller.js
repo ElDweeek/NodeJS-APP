@@ -1,39 +1,29 @@
 
 
-let users = [
-    {
-        id: 1,
-        name: "Ahmed",
-        age: 33
-    }
-]
+import userModel from "../../../DataBase/models/user.model.js"
+import bcrypt from "bcrypt"
 
-const getAllUsers = (req, res) => {
-    res.json({message: "Getting All Users", users})
+
+const signUp = async (req,res) => {
+
+    await userModel.insertMany(req.body)
+    res.json({message: "Added"})
+
 }
 
 
-const addUser = (req, res) => {
-    req.body.id = users[users.length - 1].id + 1;
-    users.push(req.body)
-    res.json({Message: "Added",users})
-}
 
-const deleteUser = (req, res) => {
-    users = users.filter(x => x.id != req.params.id);
-    res.json({message: "Deleted",users})
+const signIn = async (req,res) => {
+
+    const existUser = await userModel.findOne({email : req.body.email})
+    if(!existUser || !bcrypt.compareSync(req.body.password , existUser.password))
+        return res.status(404).json({message: "Email Or Password is Invaild"})
+    res.json({message: "Login Successful" ,existUser})
 }
 
 
-const updateUser = (req, res) =>{
-    let updatedOne = users.find(x => x.id == req.params.id);
-    updatedOne.name = req.body.name;
-    res.json({message: "Updated",users})
-}
 
 export {
-    getAllUsers,
-    addUser,
-    deleteUser,
-    updateUser
+    signUp,
+    signIn
 }

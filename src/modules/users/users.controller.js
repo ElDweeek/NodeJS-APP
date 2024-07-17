@@ -1,29 +1,38 @@
 
 
 import userModel from "../../../DataBase/models/user.model.js"
-import bcrypt from "bcrypt"
+import sendEmailVerefication from "../../util/sendEmail.js"
 
 
 const signUp = async (req,res) => {
-
+    // code implemented in checkLoginRegister.js File
     await userModel.insertMany(req.body)
-    res.json({message: "Added"})
-
+    sendEmailVerefication(req.body.email)
+    res.json({message: "Register Successful"})
 }
 
 
 
 const signIn = async (req,res) => {
-
-    const existUser = await userModel.findOne({email : req.body.email})
-    if(!existUser || !bcrypt.compareSync(req.body.password , existUser.password))
-        return res.status(404).json({message: "Email Or Password is Invaild"})
-    res.json({message: "Login Successful" ,existUser})
+    // code implemented in checkLoginRegister.js File
+    res.json({message: "Login Successful"})
 }
 
+
+const verifyAccount = async(req,res) => {
+    
+    console.log(req.params.email);
+    let verifiedUser = await userModel.findOneAndUpdate(
+        {email: req.params.email},
+        {isVerified: true},
+        {new: true}
+    )
+    res.json({message: "welcome", verifiedUser})
+}
 
 
 export {
     signUp,
-    signIn
+    signIn,
+    verifyAccount
 }

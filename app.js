@@ -5,13 +5,11 @@ import {dbConnection} from "./DataBase/dbConnection.js"
 import userRoutes from "./src/modules/users/users.routes.js";
 import noteRoutes from "./src/modules/notes/notes.routes.js";
 
-
 const app = express()
 const port = 3000;
 app.use(express.json())
 
 dbConnection
-
 
 app.use(userRoutes)
 app.use(noteRoutes)

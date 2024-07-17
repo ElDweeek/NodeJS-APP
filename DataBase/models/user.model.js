@@ -5,7 +5,11 @@ const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    age: Number
+    age: Number,
+    isVerified:{
+        type: Boolean,
+        default: false
+    } 
 },{
     timestamps: true
 })

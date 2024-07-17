@@ -1,11 +1,12 @@
 import express from "express"
-import { signIn, signUp } from "./users.controller.js";
-import { checkEmail } from "../../middleware/checkEmail.js";
+import { signIn, signUp , verifyAccount } from "./users.controller.js";
+import { checkEmail, checkForSignin } from "../../middleware/checkLoginRegister.js";
 
 const userRoutes = express.Router()
 
 
 userRoutes.post("/signUp",checkEmail, signUp)
-userRoutes.get("/signIn", signIn)
+userRoutes.post("/signIn",checkForSignin, signIn)
+userRoutes.get("/verify/:email", verifyAccount)
 
 export default userRoutes;

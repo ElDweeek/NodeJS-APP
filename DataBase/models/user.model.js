@@ -6,10 +6,16 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     age: Number,
+    otp: String,
     isVerified:{
         type: Boolean,
         default: false
-    } 
+    },
+    role: {
+        type: String,
+        enums: ["User","Admin"],
+        default: "User"
+    }
 },{
     timestamps: true
 })

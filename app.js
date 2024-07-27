@@ -1,5 +1,3 @@
-
-
 import express from "express";
 import {dbConnection} from "./DataBase/dbConnection.js"
 import userRoutes from "./src/modules/users/users.routes.js";
@@ -17,9 +15,11 @@ app.use(noteRoutes)
 
 
 
-app.listen(port, ()=> {
+app.listen(port, () => {
     console.log(`server is Running at http://localhost:${port}`);
     console.log(`-- Our End Points:`);
     console.log(`1 >> server is Running at http://localhost:${port}/signUp`);
     console.log(`2 >> server is Running at http://localhost:${port}/signIn`);
+    console.log(`2 >> server is Running at http://localhost:${port}/note`);
 })
+
